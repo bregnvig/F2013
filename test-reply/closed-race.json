@@ -1,0 +1,22 @@
+{
+	"name": "Sepang",
+	"id": 95,
+	"closed": true,
+	"raceResult": null,
+	"selectedDriver": {
+		"name": "Sergio Perez",
+		"id": 43,
+		"number": 6,
+		"active": true,
+		"partOfSeason": false,
+		"points": 0
+	},
+	"participant": true,
+	"fullyLoaded": false,
+	"waiting": false,
+	"opened": false,
+	"bids": [],
+	"openDate": 1363561200000,
+	"closeDate": 1363918860000,
+	"completed": false
+}

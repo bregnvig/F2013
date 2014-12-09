@@ -1,0 +1,17 @@
+{
+	"name": "Flemming Bregnvig",
+	"playername": "flb",
+	"bettingMoneyAvailable": true,
+	"emailAddress": "flemming@bregnvig.dk",
+	"reminderWanted": true,
+	"wbcParticipant": true,
+	"lastYearWBC": 3,
+	"partOfSeason": false,
+	"token": "b19742ab48ff6e0cfaf6a58dc36fa733",
+	"gameAdministrator": true,
+	"bankAdministrator": true,
+	"sms": "28712234",
+	"balance": 136,
+	"firstName": "Flemming",
+	"lastName": "Bregnvig"
+}

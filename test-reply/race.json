@@ -1,0 +1,22 @@
+{
+	"name": "Shanghai",
+	"id": 96,
+	"closed": false,
+	"completed": false,
+	"selectedDriver": {
+		"name": "Romain Grosjean",
+		"id": 26,
+		"number": 8,
+		"active": true,
+		"partOfSeason": false,
+		"points": 0
+	},
+	"participant": false,
+	"opened": true,
+	"waiting": false,
+	"bids": [],
+	"openDate": 1364166000000,
+	"closeDate": 1365733320000,
+	"fullyLoaded": false,
+	"raceResult": null
+}
