@@ -19,7 +19,7 @@ F2013.bid = new Bid();
 F2013.error = "";
 F2013.forceReload = false;
 F2013.testMode = window.location.search.replace( "?", "" ) == "test";
-F2013.gameHost = location.host == "m.formel1.loopit.eu" ? "http://formel1.loopit.eu/" : "../";
+F2013.gameHost = location.host == "m.formel1.loopit.eu" ? "http://formel1.loopit.eu/" : "http://localhost:8080/f2007/";
 F2013.allRaces = [];
 F2013.allRaces.loaded = false;
 F2013.allRaces.findRace = findRace;
@@ -59,7 +59,12 @@ $(document).on('pageinit', function(event) {
 	}
 	switch (event.target.id) {
 	case "home":
-		$.ajax({url: F2013.gameHost + "ws/season-name", crossDomain: true, type: "GET", dataType: 'text'}).done(function(data) {
+		$.ajax({
+				url: F2013.gameHost + "ws/season-name",
+				crossDomain: true,
+				type: "GET",
+				dataType: 'text'
+		}).done(function(data) {
 			$('#title').text(F2013.seasonname = data);
 			document.title = data;
 			$("#home").height($("#home").height());
@@ -72,8 +77,6 @@ $(document).on('pageinit', function(event) {
 		break;
 	}
 });
-
-$().on
 
 function loadHome() {
 	F2013.forceReload = false;
@@ -101,7 +104,12 @@ function loadHome() {
 				$.mobile.loading("hide");
 			}
 		}).fail(function(jqxhr, textStatus, error) {
-			gotoErrorPage(error);
+			if (error.message === 'Unexpected end of input') {
+				$('#race-status').text('Der er ikke flere løb');
+				$.mobile.loading("hide");
+			} else {
+				gotoErrorPage(error);
+			}
 		});
 	} else {
 		$("#race-status").text("Du er ikke logget ind");
@@ -156,7 +164,7 @@ function findRace(id) {
 	})[0];
 }
 function replaceRace(race) {
-	if (race.id == F2013.race.id) F2013.race = race;
+	if (F2013.race && race.id === F2013.race.id) F2013.race = race;
 	$.each(F2013.allRaces, function(i) {
 		if (this.id == race.id) {
 			F2013.allRaces[i] = race;

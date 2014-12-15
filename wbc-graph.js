@@ -65,13 +65,13 @@ F2013.loadGraph = function() {
 	var handleCollapseAndExpand = function() {
 		
 		var collapsedSize = $("#wbc-graph").height();
-		$("#wbc-graph").on("expand", function(event, ui) {
+		$("#wbc-graph").on("collapsibleexpand", function(event, ui) {
 			if ($("#wbc-graph-slider").height() < $("#wbc-graph").height()) {
 				F2013.graphSize = $("#home").height()+($("#wbc-graph").height()-collapsedSize);
 				$("#home").height(F2013.graphSize);
 			}
 		});
-		$("#wbc-graph").on("collapse", function(event, ui) {
+		$("#wbc-graph").on("collapsiblecollapse", function(event, ui) {
 			$("#home").height(F2013.graphSize = F2013.homeSize);
 			$(":checkbox").each(function() {
 				partOfGraph[this.id] = this.checked;
