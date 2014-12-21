@@ -1,14 +1,18 @@
-﻿if (typeof Object.create !== 'function') {
+﻿'use strict';
+
+if (typeof Object.create !== 'function') {
 	Object.create = function(o) {
 		var F = new function() {};
 		F.prototype = o;
 		return new F();
-	}
-}
+	};
+};
 
 $.fn.doesExist = function(){
     return jQuery(this).length > 0;
 };
+
+moment.locale('da');
 
 var F2013 = {};
 
@@ -16,61 +20,67 @@ F2013.user = new User();
 F2013.race = null;
 F2013.drivers = null;
 F2013.bid = new Bid();
-F2013.error = "";
+F2013.error = '';
 F2013.forceReload = false;
-F2013.testMode = window.location.search.replace( "?", "" ) == "test";
-F2013.gameHost = location.host == "m.formel1.loopit.eu" ? "http://formel1.loopit.eu/" : "http://localhost:8080/f2007/";
+F2013.testMode = window.location.search.replace( '?', '' ) == 'test';
+F2013.gameHost = location.host == 'm.formel1.loopit.eu' ? 'http://formel1.loopit.eu/' : 'http://localhost:8080/f2007/';
 F2013.allRaces = [];
 F2013.allRaces.loaded = false;
 F2013.allRaces.findRace = findRace;
 F2013.allRaces.replaceRace = replaceRace;
 
 $(document).on('pageinit', function(event) {
-	$("[id^=dot]").click(function(event) {
-		var index = event.currentTarget.id.replace(/\D/g, ""); 
+	$('[id^=dot]').click(function(event) {
+		var index = event.currentTarget.id.replace(/\D/g, ''); 
 		if (mySwiper.activeIndex != index) {
-			$(".dot").removeClass("active");
-			$("#dot"+index).addClass("active");
+			$('.dot').removeClass('active');
+			$('#dot'+index).addClass('active');
 			mySwiper.swipeTo(index, Math.abs(index-mySwiper.activeIndex)*300);
 		}
 	});
 	$.ajaxSetup({
 		beforeSend: function(jqXHR){
-			if (F2013.user.isValid()) jqXHR.setRequestHeader("Authorization", F2013.user.authorizationValue());
+			if (F2013.user.isValid()) jqXHR.setRequestHeader('Authorization', F2013.user.authorizationValue());
 		},
 		cache: false
 	});
 	if (Modernizr.localstorage == false) {
-		$.mobile.changePage($("#no-support-local-storage"));
+		$.mobile.changePage($('#no-support-local-storage'));
 		return;
 	} else if ('withCredentials' in new XMLHttpRequest() == false) {
-		$.mobile.changePage($("#no-support-xhr"));
+		$.mobile.changePage($('#no-support-xhr'));
 		return;
 	} else {
-		$(document).on("pageshow", "#home", function(event, ui) {
-			if (F2013.user.isValid() == false && F2013.seasonname != undefined) {
+		$(document).on('pageshow', '#home', function(event, ui) {
+			if (F2013.user.isValid() === false && F2013.seasonname) {
 				setTimeout(function() {
-					$.mobile.changePage("login.html", {transition: "slidedown"});
+					$.mobile.changePage('login.html', {transition: 'slidedown'});
 				}, 500)
 				;
-			} 
+			}
 			if (F2013.forceReload || ui.prevPage.length == 0) loadHome();
 		});
 	}
 	switch (event.target.id) {
-	case "home":
+	case 'home':
 		$.ajax({
-				url: F2013.gameHost + "ws/season-name",
+				url: F2013.gameHost + 'ws/season-name',
 				crossDomain: true,
-				type: "GET",
+				type: 'GET',
 				dataType: 'text'
 		}).done(function(data) {
 			$('#title').text(F2013.seasonname = data);
 			document.title = data;
-			$("#home").height($("#home").height());
-			F2013.homeSize = F2013.graphSize = $("#home").height();
-			mySwiper.resizeFix();
-			if (F2013.user.isValid() == false) $.mobile.changePage("login.html", {transition: "slidedown"});
+			$('#home').height($('#home').height());
+			F2013.homeSize = F2013.graphSize = $('#home').height();
+			if (window.mySwiper) {
+				window.mySwiper.resizeFix();
+			}
+			if (F2013.user.isValid() === false) {
+				$.mobile.changePage('login.html', {transition: 'slidedown'});
+			} else {
+				$('#user-name').text('Velkommen ' + F2013.user.firstName());
+			}
 		}).fail(function(jqxhr, textStatus, error) {
 			gotoErrorPage(error);
 		});
@@ -80,56 +90,64 @@ $(document).on('pageinit', function(event) {
 
 function loadHome() {
 	F2013.forceReload = false;
-	$("#participate").parent().hide();
-	$("#players").parent().hide();
+	$('#participate').parent().hide();
+	$('#players').parent().hide();
 
 	if (F2013.user.isValid()) {
-		$.mobile.loading("show", {text: "Henter løbet...", textVisible: true, textonly: false, theme: "a"});
+		$.mobile.loading('show', {text: 'Henter løbet...', textVisible: true, textonly: false, theme: 'a'});
 		$.ajax({url: F2013.gameHost+'ws/race', dataType: 'json'}).done(function(data, textStatus, jqXHR) {
 			F2013.race = newRace(data);
-			$("#race-name").text(F2013.race.name);
-			$("#race-status").text(F2013.race.status());
+			$('#race-name').text(F2013.race.name);
+			$('#race-status').text(F2013.race.status());
 			if (F2013.race.open()) {
-				$("#participate").parent().show();
-				$.ajax({url: F2013.gameHost+"ws/race/drivers", dataType: 'json'}).done(function(data) {
+				$('#participate').parent().show();
+				$.ajax({url: F2013.gameHost+'ws/race/drivers', dataType: 'json'}).done(function(data) {
 					F2013.drivers = newDrivers(data);
-					$.mobile.loading("hide");
+					$.mobile.loading('hide');
 				}).fail(function(jqxhr, textStatus, error) {
 					gotoErrorPage(error);
 				});
 			} else {
 				if (F2013.race.viewable()) {
-					$("#players").parent().show();
+					$('#players').parent().show();
 				}
-				$.mobile.loading("hide");
+				$.mobile.loading('hide');
 			}
 		}).fail(function(jqxhr, textStatus, error) {
 			if (error.message === 'Unexpected end of input') {
 				$('#race-status').text('Der er ikke flere løb');
-				$.mobile.loading("hide");
+				$.mobile.loading('hide');
 			} else {
 				gotoErrorPage(error);
 			}
 		});
-	} else {
-		$("#race-status").text("Du er ikke logget ind");
+		$.ajax({url: F2013.gameHost+'ws/player/account', dataType: 'json'}).done(function(account) {
+			$('#amount').text(account.balance);
+			F2013.user.account = account;
+			if (account.balance < 30) {
+				$('#transfer-money-help').show();
+			}
+		});
+
+		} else {
+		$('#race-status').text('Du er ikke logget ind');
 	}
 }
 
-$("#not-working").on("pageshow", function(event, ui) {
-	$("#error-text").text(F2013.error);
+$('#not-working').on('pageshow', function(event, ui) {
+	$('#error-text').text(F2013.error);
 });
 
 function gotoErrorPage(error) {
-	$.mobile.loading("hide");
+	$.mobile.loading('hide');
 	F2013.error = error;
-	$.mobile.changePage($("#not-working"));
+	$.mobile.changePage($('#not-working'));
 }
 
 function pageSwiped(swiper) {
 	if (swiper.previousIndex != swiper.activeIndex) {
-		$(".dot").removeClass("active");
-		$("#dot"+swiper.activeIndex).addClass("active");
+		$('.dot').removeClass('active');
+		$('#dot'+swiper.activeIndex).addClass('active');
 		switch (swiper.activeIndex) {
 		case 0:
 			setHomeSize(F2013.homeSize);
@@ -155,7 +173,7 @@ function pageSwiped(swiper) {
 }
 
 function setHomeSize(size) {
-	$("#home").height(size);
+	$('#home').height(size);
 }
 
 function findRace(id) {

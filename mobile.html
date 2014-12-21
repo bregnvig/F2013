@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
 		<link rel="stylesheet" href="swiper/idangerous.swiper.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	  	<link rel=stylesheet href="f2013.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	  	<script defer src="swiper/idangerous.swiper-1.9.2.min.js"></script>
@@ -30,9 +31,32 @@
 	<body> 
 		<div data-role=page id=home>
 			<div id=home-header data-role=header data-position=fixed data-tab-toggle=true>
-				<a href="login.html" data-transition=slidedown data-icon=gear class=ui-btn-right>Profil</a>
+				<a href="#settings-panel" data-icon="bars" data-iconpos="notext" class=ui-btn-right>Profil</a>
 				<h1 id=title>F1</h1>
 		  	</div>
+			<div data-role="panel" id="settings-panel" data-position="right" data-display="overlay">
+				<div class="ui-panel-inner">
+					<h3 id="user-name"></h3>
+
+					<p>Du har <strong id="amount"><i class="fa fa-star-o fa-spin"></i></strong> kr. på din konto.</p>
+
+					<section id="transfer-money-help" style="display:none;">
+						<p>Hvis du har brug for at overføre nogle penge, så skal de overføres</p>
+						<p>Konto: <strong>3117 4820548787</strong></p>
+						<p>Mobilepay: <strong>28712234</strong></p>
+						<p>
+							Når du har overført pengene, så kan du skrive til <a href="mailto:flemming@bregnvig.dk">Flemming</a> og sige det.
+						</p>
+					</section>
+					<p>
+						<a href="/movement.html" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-bullets ui-btn-icon-left">Se bevægelse</a>
+					</p>
+					<hr>
+					<p>
+						<a href="/profile.html" data-transition="slidedown" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-user ui-btn-icon-left">Profil</a>
+					</p>
+				</div>
+			</div>
 		  	<div id=olmap>
 			  	<div class="swiper-container">
 					<div class="swiper-wrapper">
@@ -46,7 +70,7 @@
 								<h1 id=race-name></h1>
 								<h2 id=race-status></h2>
 								<p>
-									<a href="bid.html" id=participate data-role=button data-dom-cache=true data-theme=b>Jeg skal deltage!</a>
+									<a href="bid.html" id=participate class="ui-btn ui-btn-b ui-btn-corner-all ui-shadow">Jeg skal deltage!</a>
 								</p>
 								<p>
 									<a href="players.html" id=players data-role=button data-theme=b>Se bud</a>
@@ -75,7 +99,7 @@
 					</div>
 				</div>	
 		  	</div>
-		  	<div id=home-footer data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme=c>
+		  	<div id=home-footer data-role="footer" data-position="fixed" data-tap-toggle="false">
 				<h1>
 					<span id=dot0 class="dot"></span>
 					<span id=dot1 class="dot active"></span>
@@ -122,6 +146,7 @@
 				</p>
 			</div>
 		</div>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment-with-locales.min.js"></script>
 		<script src="modernizr.custom.49780.js"></script>
 		<script src="chart.js/Chart.min.js"></script>
 		<script src="domain.js"></script>
@@ -134,5 +159,7 @@
 		<script src="races.js"></script>
 		<script src="wbc-player.js"></script>
 		<script src="wbc-graph.js"></script>
+		<script src="movement.js"></script>
+		<script src="profile.js"></script>
 	</body>
 </html>

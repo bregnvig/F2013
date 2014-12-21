@@ -1,15 +1,12 @@
-$(document).on("pageinit", "#login", function() {
+$(document).on('pageinit', '#login', function() {
 	$('#login #playername').val(F2013.user.playername());
-	$('#login #remember-me').prop("checked", F2013.user.rememberMe()).checkboxradio("refresh");
+	$('#login #remember-me').prop('checked', F2013.user.rememberMe()).checkboxradio('refresh');
 
 	$('#login #login-btn').click(function() {
-		F2013.user.playername($('#login #playername').val());
-
-		$.ajax({url: F2013.gameHost+'ws/login/'+F2013.user.playername()+"/"+$('#login #password').val(), crossDomain: true, dataType: "json"}).done(function(data) {
-			F2013.user.name(data.name);
-			F2013.user.token(data.token);
+		$.ajax({url: F2013.gameHost+'ws/login/'+$('#login #playername').val()+'/'+$('#login #password').val(), crossDomain: true, dataType: 'json'}).done(function(data) {
+			F2013.user.set(data);
 			F2013.forceReload = true;
-			history.back();
+			window.location = 'mobile.html';
 		}).fail(function(jqxhr, textStatus, error) {
 			gotoErrorPage(error);
 		});
@@ -19,5 +16,5 @@ $(document).on("pageinit", "#login", function() {
 		if(F2013.user.rememberMe() == false) {
 			F2013.user.reset();
 		}
-	});	
+	});
 });

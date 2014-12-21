@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html> 
+<html> 
+	<head>
+		<script>
+			location.href = "mobile.html";
+		</script>
+	</head> 
+
+	<body> 
+		<div data-role=page id=profile >
+	  		<div data-role=header data-position=fixed data-add-back-btn=true>
+	    		<h1>Profil</h1>
+	  		</div>
+			<div role="banner" class="ui-header ui-bar-b">
+				<h3 class="ui-title">Adgangskode</h3>
+			</div>
+		  	<div data-role=content>
+				<div class="ui-field-contain">
+					<label for=password>Adgangskode</label>
+					<input type=password id=password>
+				</div>
+				<div class="ui-field-contain">
+					<label for=password>Adgangskode igen</label>
+					<input type=password id=password2>
+				</div>
+				<div class="ui-field-contain">
+					<button class="ui-shadow ui-btn ui-corner-all" id=login-btn>Opdater adgangskode</button>
+				</div>
+			</div>
+			<div role="banner" class="ui-header ui-bar-b">
+				<h3 class="ui-title">Information</h3>
+			</div>
+			<div data-role=content>
+				<div class="ui-field-contain">
+					<label for=firstName>Fornavn</label>
+					<input type=text id=firstName>
+				</div>
+				<div class="ui-field-contain">
+					<label for=lastName>Efternavn</label>
+					<input type=text id=lastName>
+				</div>
+				<div class="ui-field-contain">
+					<label for=email>E-mail-adresse</label>
+					<input type=email id=email>
+				</div>
+				<div class="ui-field-contain">
+					<label for=sms>SMS nummer</label>
+					<input type=tel id=sms>
+				</div>
+				<div class="ui-field-contain">
+					<label for="receive-sms">Modtag påmindelse</label>
+					<select name="receive-sms" id="receive-sms" data-role="slider">
+						<option id="receive-no" value="off">Nej</option>
+						<option id="receive-yes" value="on">Ja</option>
+					</select>
+				</div>
+				<div class="ui-field-contain">
+					<button type="submit" id="submit" class="ui-shadow ui-btn ui-corner-all">Opdater</button>
+				</div>
+		  	</div>
+		</div>
+	</body>
+</html>
