@@ -42,12 +42,21 @@ $(document).on('pageinit', function(event) {
 		beforeSend: function(jqXHR){
 			if (F2013.user.isValid()) jqXHR.setRequestHeader('Authorization', F2013.user.authorizationValue());
 		},
-		cache: false
+		cache: false,
+		crossDomain: true,
+		converters: {'text json' : function (jsonValue) {
+			return JSON.parse(jsonValue, function(key, value) {
+				if(typeof value === 'number' && /\d{8}0{5}/.test(value)) {
+					return moment(value);
+				}
+				return value;
+			});
+		}}
 	});
 	if (Modernizr.localstorage == false) {
 		$.mobile.changePage($('#no-support-local-storage'));
 		return;
-	} else if ('withCredentials' in new XMLHttpRequest() == false) {
+	} else if ('withCredentials' in new XMLHttpRequest() === false) {
 		$.mobile.changePage($('#no-support-xhr'));
 		return;
 	} else {
@@ -58,7 +67,9 @@ $(document).on('pageinit', function(event) {
 				}, 500)
 				;
 			}
-			if (F2013.forceReload || ui.prevPage.length == 0) loadHome();
+			if (F2013.forceReload || ui.prevPage.length === 0) {
+				loadHome();
+			}
 		});
 	}
 	switch (event.target.id) {
@@ -79,7 +90,18 @@ $(document).on('pageinit', function(event) {
 			if (F2013.user.isValid() === false) {
 				$.mobile.changePage('login.html', {transition: 'slidedown'});
 			} else {
-				$('#user-name').text('Velkommen ' + F2013.user.firstName());
+				$('#user-name').text(F2013.user.firstName());
+				if (F2013.user.wbcParticipant()) {
+					$('#wbc-participating').show();
+				} else {
+					$('#wbc-not-participating').show();
+					$.ajax({
+						url: F2013.gameHost + 'ws/v2/wbc',
+						dataType: 'json'
+					}).done(function(data) {
+						$('#latestJoinDate').text(data.latestJoinDate.fromNow());
+					});
+				}
 			}
 		}).fail(function(jqxhr, textStatus, error) {
 			gotoErrorPage(error);
@@ -121,15 +143,9 @@ function loadHome() {
 				gotoErrorPage(error);
 			}
 		});
-		$.ajax({url: F2013.gameHost+'ws/player/account', dataType: 'json'}).done(function(account) {
-			$('#amount').text(account.balance);
-			F2013.user.account = account;
-			if (account.balance < 30) {
-				$('#transfer-money-help').show();
-			}
-		});
+		F2013.user.updateAccount();
 
-		} else {
+	} else {
 		$('#race-status').text('Du er ikke logget ind');
 	}
 }
@@ -145,7 +161,7 @@ function gotoErrorPage(error) {
 }
 
 function pageSwiped(swiper) {
-	if (swiper.previousIndex != swiper.activeIndex) {
+	if (swiper.previousIndex !== swiper.activeIndex) {
 		$('.dot').removeClass('active');
 		$('#dot'+swiper.activeIndex).addClass('active');
 		switch (swiper.activeIndex) {

@@ -18,3 +18,25 @@
 hr {
     border: 1px solid lightgrey;
 }
+
+.f2013-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.wbc-menu {
+    background-color: lightgray;
+    padding: 8px;
+    border-radius: 3px
+}
+
+.lastYearWBC-1 {
+    color: #FFD700;
+}
+.lastYearWBC-2 {
+    color: #C0C0C0;
+}
+.lastYearWBC-3 {
+    color: #CD7F32;
+}

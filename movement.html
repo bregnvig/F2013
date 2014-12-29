@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<script>
-			location.href = "mobile.html";
-		</script>
-	</head> 
-	<body>
-		<div data-role=page id=movement>
-			<div data-role=header data-position=fixed data-add-back-btn=true>
-				<h1 id="movement-title">Bevægelser</h1>
-				<a href="#transferMoneyPopup" data-rel="popup" data-icon="info" data-iconpos="notext" class=ui-btn-right>Profil</a>
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<script>
+				location.href = "mobile.html";
+			</script>
+		</head>
+		<body>
+			<div data-role=page id=movement>
+				<div data-role=header data-position=fixed data-add-back-btn=true>
+					<h1 id="movement-title">Bevægelser</h1>
+					<a href="#transferMoneyPopup" data-rel="popup" data-icon="info" data-iconpos="notext" class=ui-btn-right>Profil</a>
+				</div>
+					<div data-role=content>
+					<ul data-role=listview id=movements>
+					</ul>
+				</div>
+				<div data-role="popup" id="transferMoneyPopup" data-overlay-theme="b" class="ui-content" style="max-width:280px">
+					<p>Hvis du har brug for at overføre nogle penge, så skal de overføres</p>
+					<p>Konto: <strong>3117 4820548787</strong></p>
+					<p>Mobilepay: <strong>28712234</strong></p>
+					<p>
+						Når du har overført pengene, så kan du skrive til <a href="mailto:flemming@bregnvig.dk">Flemming</a> og sige det.
+					</p>
+				</div>
 			</div>
-				<div data-role=content>
-				<ul data-role=listview id=movements>
-				</ul>
-			</div>
-			<div data-role="popup" id="transferMoneyPopup" class="ui-content" style="max-width:280px">
-				<p>Hvis du har brug for at overføre nogle penge, så skal de overføres</p>
-				<p>Konto: <strong>3117 4820548787</strong></p>
-				<p>Mobilepay: <strong>28712234</strong></p>
-				<p>
-					Når du har overført pengene, så kan du skrive til <a href="mailto:flemming@bregnvig.dk">Flemming</a> og sige det.
-				</p>
-			</div>
-		</div>
-	</body>
-</html>
+		</body>
+	</html>

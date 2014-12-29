@@ -26,6 +26,13 @@ var User = function() {
 		_user.playerName = playerName;
 		save();
 	};
+	this.wbcParticipant = function(participant) {
+		if (participant === undefined) {
+			return _user ? _user.wbcParticipant : false;
+		}
+		_user.wbcParticipant = participant;
+		save();
+	};
 	this.token = function(token) {
 		if (token === undefined) {
 			return _user ? _user.token : undefined;
@@ -87,6 +94,15 @@ var User = function() {
 		}
 		return 'Basic ' + window.btoa(this.playername()+':'+this.token());
 	};
+	this.updateAccount = function() {
+		$.ajax({url: F2013.gameHost+'ws/player/account', dataType: 'json'}).done(function(account) {
+			$('#amount').text(account.balance);
+			F2013.user.account = account;
+			if (account.balance < 30) {
+				$('#transfer-money-help').show();
+			}
+		});
+	};
 };
 
 var raceFunction = {
@@ -94,7 +110,7 @@ var raceFunction = {
 			return this.opened === true && this.participant === false;
 		},
 		viewable: function() {
-			return this.participant || this.closed === true;
+			return this.participant || this.completed === true;
 		},
 		status: function() {
 			if (this.participant === true) {

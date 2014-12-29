@@ -34,12 +34,8 @@
 				<a href="#settings-panel" data-icon="bars" data-iconpos="notext" class=ui-btn-right>Profil</a>
 				<h1 id=title>F1</h1>
 		  	</div>
-			<div data-role="panel" id="settings-panel" data-position="right" data-display="overlay">
-				<div class="ui-panel-inner">
-					<h3 id="user-name"></h3>
-
-					<p>Du har <strong id="amount"><i class="fa fa-star-o fa-spin"></i></strong> kr. på din konto.</p>
-
+			<div data-role="panel" id="settings-panel" data-position="right" data-display="overlay" style="display: flex">
+				<div class="ui-panel-inner f2013-menu">
 					<section id="transfer-money-help" style="display:none;">
 						<p>Hvis du har brug for at overføre nogle penge, så skal de overføres</p>
 						<p>Konto: <strong>3117 4820548787</strong></p>
@@ -47,14 +43,33 @@
 						<p>
 							Når du har overført pengene, så kan du skrive til <a href="mailto:flemming@bregnvig.dk">Flemming</a> og sige det.
 						</p>
+						<hr>
 					</section>
-					<p>
-						<a href="/movement.html" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-bullets ui-btn-icon-left">Se bevægelse</a>
-					</p>
-					<hr>
-					<p>
-						<a href="/profile.html" data-transition="slidedown" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-user ui-btn-icon-left">Profil</a>
-					</p>
+					<ul data-role=listview data-inset=true data-theme="b" style="margin-top: 20px;">
+						<li><a href="/profile.html" data-transition="slidedown" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-user ui-btn-icon-left" id="user-name">Profil</a></li>
+						<li><a href="/movement.html" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-bullets ui-btn-icon-left">Konto (<strong id="amount"><i class="fa fa-star-o fa-spin"></i></strong> kr)</a></li>
+						<li><a href="/rules.html" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-info ui-btn-icon-left">Regler</a></li>
+					</ul>
+					<div style="flex: 1 100%">
+
+					</div>
+					<section id="wbc-not-participating" class="wbc-menu" style="display: none;">
+						<h3>Deltag i WBC</h3>
+						<p>
+							Du har muligheden for at deltage i WBC. Sidste chance for tilmelding er <strong id="latestJoinDate"><i class="fa fa-star-o fa-spin"></i></strong>.
+						</p>
+						<p>
+							Tilmeldingen koster 100 og tilmeldingen er bindende.
+						</p>
+						<p>
+							<button class="ui-btn ui-btn-b ui-btn-corner-all ui-shadow" id="btn-join-wbc">Tilmeld mig!</button>
+						</p>
+					</section>
+					<section id="wbc-participating" style="display: none">
+						<p>
+							<strong><i class="fa fa-star-o fa-spin"></i> Du er deltager i dette års WBC mesterskab!</strong>
+						</p>
+					</section>
 				</div>
 			</div>
 		  	<div id=olmap>
